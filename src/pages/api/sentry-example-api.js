@@ -1,15 +1,19 @@
-// A faulty API route to test Sentry's error monitoring
+import {captureException} from "@sentry/nextjs";
 
 const willThrow = () => {
   const hey = 12
   const value = 1
   const str = "some string"
-  const intermediate = hey + value
   console.log(hey, value, str)
-  throw new Error("Intentional error on Sentry reproduction")
+  throw new Error("Intentional error on Sentry reproduction 3")
 }
 
 export default function handler(_req, res) {
-  willThrow()
+  try {
+    willThrow()
+  } catch (e) {
+    captureException(e)
+  }
+
   res.status(200).json({ name: "John Doe" });
 }
