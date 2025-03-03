@@ -15,3 +15,5 @@ Sentry.init({
 
   includeLocalVariables: true,
 });
+
+console.log("Sentry server started");
